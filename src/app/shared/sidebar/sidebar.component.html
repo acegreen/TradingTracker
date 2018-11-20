@@ -1,0 +1,45 @@
+<div class="sidebar-wrapper">
+  <div class="logo">
+    <a href="#" class="simple-text">
+      <!-- <div class="logo-img">
+        <img src="../../assets/img/angular2-logo.png" alt="" />
+      </div> -->
+      YokuMite (BETA)
+    </a>
+  </div>
+  <ul class="nav">
+    <!-- <li class="dropdown" *ngIf="isMobileMenu()">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="ti-bell"></i>
+        <p class="notification">5 Notification</p>
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Notification 1</a></li>
+        <li><a href="#">Notification 2</a></li>
+        3
+        <li><a href="#">Notification 3</a></li>
+        <li><a href="#">Notification 4</a></li>
+        <li><a href="#">Another notification</a></li>
+      </ul>
+    </li>
+    <li class="divider" *ngIf="isMobileMenu()"></li> -->
+    <li
+      *ngFor="let menuItem of menuItems"
+      routerLinkActive="active"
+      class="{{ menuItem.class }}"
+    >
+      <a [routerLink]="[menuItem.path]">
+        <i class="{{ menuItem.icon }}"></i>
+        <p>{{ menuItem.title }}</p>
+      </a>
+    </li>
+    <li class="divider" *ngIf="isMobileMenu()"></li>
+    <li *ngIf="isMobileMenu()">
+      <a (click)="logout()"
+        ><i class="ti-arrow-right"></i>
+        <p>Sign Out</p>
+      </a>
+    </li>
+  </ul>
+</div>

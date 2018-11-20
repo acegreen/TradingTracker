@@ -1,0 +1,396 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <button
+        type="button"
+        class="btn btn-neutral btn-lg"
+        data-toggle="modal"
+        data-target="#batchAddTradesModal"
+      >
+        <i class="ti-upload"> From CSV</i>
+      </button>
+      <div class="modal" tabindex="-1" role="dialog" id="batchAddTradesModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Upload</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="text-center">
+                <i class="fa fa-upload fa-4x"></i>
+                <p>Upload a csv with your trades to add them all at once</p>
+                <a
+                  target="_self"
+                  href="../../assets/template/trades_template.numbers"
+                  download="trades_template.numbers"
+                  >Download Template</a
+                >
+              </div>
+              <div class="text-center">
+                <p>Fill the template and upload it as a csv</p>
+              </div>
+              <div class="col-xs-12">
+                <label for="batchTradesFile" class="btn btn-success btn-block"
+                  >Upload CSV</label
+                >
+                <input
+                  type="file"
+                  id="batchTradesFile"
+                  name="batchTradesFile"
+                  style="display: none"
+                  (change)="onBatchUploadFileSelect($event.target)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn btn-neutral btn-lg"
+        data-toggle="modal"
+        data-target="#addTradeModal"
+        (click)="resetForm(ngAddTradeForm)"
+      >
+        <i class="ti-plus"> Add Trade</i>
+      </button>
+      <div class="modal" id="addTradeModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Trade Info</h4>
+              <button
+                type="reset"
+                class="close"
+                data-dismiss="modal"
+                (click)="resetForm(ngAddTradeForm)"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body text-left">
+              <form
+                name="addTradeForm"
+                [formGroup]="addTradeForm"
+                #ngAddTradeForm="ngForm"
+                (ngSubmit)="onAddTradeFormSubmit(ngAddTradeForm)"
+                novalidate
+              >
+                <div class="form-row">
+                  <div
+                    class="form-group col-md-2"
+                    *ngIf="tradeType.value != tradeTypeOptions[2]"
+                    [ngClass]="{
+                      'has-error': ngAddTradeForm.submitted && symbol.invalid
+                    }"
+                  >
+                    <label for="inputSymbol">Symbol</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inputSymbol"
+                      name="symbol"
+                      placeholder="AAPL"
+                      formControlName="symbol"
+                      style="text-transform:uppercase"
+                      autofocus="true"
+                      minlength="1"
+                      maxlength="5"
+                    />
+                  </div>
+                  <div
+                    class="form-group col-md-3"
+                    [ngClass]="{
+                      'has-error': ngAddTradeForm.submitted && tradeType.invalid
+                    }"
+                  >
+                    <label for="inputType">Type</label>
+                    <select
+                      id="inputType"
+                      class="form-control"
+                      name="tradeType"
+                      formControlName="tradeType"
+                      (change)="onAddTradeTypeChange($event.target)"
+                    >
+                      <option
+                        *ngFor="let tradeTypeOption of tradeTypeOptions"
+                        value="{{ tradeTypeOption }}"
+                        >{{ tradeTypeOption }}</option
+                      >
+                    </select>
+                  </div>
+                  <div
+                    class="form-group col-md-2"
+                    *ngIf="tradeType.value == tradeTypeOptions[1]"
+                    [ngClass]="{
+                      'has-error':
+                        ngAddTradeForm.submitted && optionType.invalid
+                    }"
+                  >
+                    <label for="inputType">Option</label>
+                    <select
+                      id="inputType"
+                      class="form-control"
+                      name="optionType"
+                      formControlName="optionType"
+                    >
+                      <option
+                        *ngFor="let optionTypeOption of optionTypeOptions"
+                        value="{{ optionTypeOption }}"
+                        >{{ optionTypeOption }}</option
+                      >
+                    </select>
+                  </div>
+                  <div
+                    class="form-group col-md-4"
+                    id="expiryDatePicker"
+                    *ngIf="tradeType.value == tradeTypeOptions[1]"
+                    [ngClass]="{
+                      'has-error':
+                        ngAddTradeForm.submitted && expiryDate.invalid
+                    }"
+                  >
+                    <label for="inputExpiryDate">Expiry Date</label>
+                    <div class="input-group date">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="mm/dd/yyyy"
+                        id="inputExpiryDate"
+                        name="expiryDate"
+                        formControlName="expiryDate"
+                      />
+                      <span class="input-group-addon">
+                        <i class="ti-calendar"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-3"
+                    *ngIf="tradeType.value == tradeTypeOptions[1]"
+                    [ngClass]="{
+                      'has-error':
+                        ngAddTradeForm.submitted && strikePrice.invalid
+                    }"
+                  >
+                    <label for="inputStrikePrice">Srike Price</label>
+                    <div class="input-group">
+                      <div class="input-group-addon order-sm-1">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="number"
+                        class="form-control order-sm-2"
+                        id="inputStrikePrice"
+                        name="strikePrice"
+                        placeholder="0.00"
+                        formControlName="strikePrice"
+                        step=".25"
+                        oninput="formatAsCurrencyWithTwoDecimal(strikePrice, 2)"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-3"
+                    *ngIf="tradeType.value != tradeTypeOptions[2]"
+                    [ngClass]="{
+                      'has-error': ngAddTradeForm.submitted && quantity.invalid
+                    }"
+                  >
+                    <label for="inputQuantity">Quantity</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="inputQuantity"
+                      name="quantity"
+                      placeholder="10"
+                      formControlName="quantity"
+                    />
+                  </div>
+                  <div
+                    class="form-group col-md-4"
+                    [ngClass]="{
+                      'has-error': ngAddTradeForm.submitted && fillPrice.invalid
+                    }"
+                  >
+                    <label for="inputFillPrice">Fill Price</label>
+                    <div class="input-group">
+                      <div class="input-group-addon order-sm-1">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="number"
+                        class="form-control order-sm-2"
+                        id="inputFillPrice"
+                        name="fillPrice"
+                        placeholder="0.00"
+                        formControlName="fillPrice"
+                        step=".01"
+                        oninput="formatAsCurrencyWithTwoDecimal(fillPrice, 2)"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-3"
+                    [ngClass]="{
+                      'has-error': ngAddTradeForm.submitted && action.invalid
+                    }"
+                  >
+                    <label for="inputAction">Action</label>
+                    <select
+                      id="inputAction"
+                      class="form-control"
+                      name="action"
+                      formControlName="action"
+                    >
+                      <option
+                        *ngFor="let tradeActionOption of tradeActionOptions"
+                        value="{{ tradeActionOption }}"
+                        >{{ tradeActionOption }}</option
+                      >
+                    </select>
+                  </div>
+                  <div
+                    class="form-group col-md-2"
+                    *ngIf="tradeType.value == tradeTypeOptions[1]"
+                  ></div>
+                  <div
+                    class="form-group col-md-4"
+                    id="tradeDatePicker"
+                    [ngClass]="{
+                      'has-error': ngAddTradeForm.submitted && date.invalid
+                    }"
+                  >
+                    <label for="inputTradeDate">Date</label>
+                    <div class="input-group date">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="mm/dd/yyyy"
+                        id="inputTradeDate"
+                        name="date"
+                        formControlName="date"
+                      />
+                      <span class="input-group-addon">
+                        <i class="ti-calendar"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-4"
+                    [ngClass]="{
+                      'has-error': ngAddTradeForm.submitted && fee.invalid
+                    }"
+                  >
+                    <label for="inputFee">Fee</label>
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="inputFee"
+                        name="fee"
+                        placeholder="0.00"
+                        step=".01"
+                        formControlName="fee"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <button class="btn btn-success btn-block" type="submit">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="header">
+          <h4 class="title">Trades</h4>
+          <!-- <p class="category">List of all trades</p> -->
+        </div>
+        <div class="content table-responsive">
+          <table class="table trade-listing">
+            <thead>
+              <tr>
+                <th scope="col" *ngFor="let header of headers">{{ header }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let trade of (tradeDocuments$ | async)">
+                <td class="align-middle" scope="row">
+                  {{ userReadableSymbolString(trade.trade.symbol) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ trade.trade.tradeType }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableOptionTypeString(trade.trade.optionType) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableDateString(trade.trade.expiryDate) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableStrikeString(trade.trade.strikePrice) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ trade.trade.quantity }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ formatAsCurrencyWithTwoDecimal(trade.trade.fillPrice, 2) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{
+                    formatAsCurrencyWithTwoDecimal(trade.trade.tradeValue, 2)
+                  }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableActionString(trade.trade.action) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableDateString(trade.trade.purchaseDate) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ formatAsCurrencyWithTwoDecimal(trade.trade.fee, 2) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  <button
+                    class="btn btn-sm btn-warning btn-icon"
+                    data-toggle="modal"
+                    data-target="#addTradeModal"
+                    (click)="prefillEditTrade(trade)"
+                  >
+                    <i class="ti-marker-alt"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-danger btn-icon"
+                    (click)="deleteTrade(trade)"
+                  >
+                    <i class="ti-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

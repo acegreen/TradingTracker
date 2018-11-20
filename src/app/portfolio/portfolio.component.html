@@ -1,0 +1,120 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="header">
+          <h4 class="title">Portfolio</h4>
+          <!-- <p class="category">List of all trades</p> -->
+        </div>
+        <div
+          class="content table-responsive"
+          *ngIf="(portfolio$ | async) as portfolio"
+        >
+          <table class="table position-table">
+            <thead>
+              <tr>
+                <th scope="col" *ngFor="let header of headers">{{ header }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let position of portfolio.openPositions">
+                <td class="align-middle" scope="row">
+                  {{ userReadableSymbolString(position.symbol) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ position.tradeType }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableOptionTypeString(position.optionType) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableDateString(position.expiryDate) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableStrikeString(position.strikePrice) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ position.openQuantity }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ formatAsCurrencyWithTwoDecimal(position.averagePrice, 2) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ formatAsCurrencyWithTwoDecimal(position.currentPrice, 2) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{
+                    formatAsCurrencyWithTwoDecimal(position.positionValue, 2)
+                  }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ formatAsCurrencyWithTwoDecimal(position.profitLoss, 2) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{
+                    formatAsPercentageWithTwoDecimal(
+                      position.profitLossPercentage,
+                      2
+                    )
+                  }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{
+                    formatAsPercentageWithTwoDecimal(
+                      portfolio.positionPercentOfPortfolio(position),
+                      2
+                    )
+                  }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableDateString(position.entryDate) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableDaysString(position.daysOpen) }}
+                </td>
+                <td class="align-middle" scope="row">
+                  {{ userReadableDaysString(position.daysUntilExpiry) }}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="align-middle">
+                  {{ portfolio.numberOfOpenPositions.toString() }}
+                </td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle">
+                  {{
+                    formatAsCurrencyWithTwoDecimal(
+                      portfolio.totalPortfolioValue,
+                      2
+                    )
+                  }}
+                </td>
+                <td class="align-middle">
+                  {{
+                    formatAsCurrencyWithTwoDecimal(
+                      portfolio.totalOpenProfitLoss,
+                      2
+                    )
+                  }}
+                </td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

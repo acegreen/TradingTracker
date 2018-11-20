@@ -1,0 +1,297 @@
+<div class="container-fluid">
+  <div class="row text-center">
+    <div class="col-md-5 col-md-offset-3">
+      <div class="card card-user">
+        <div class="image">
+          <img src="assets/img/background.jpg" alt="..." />
+        </div>
+        <div class="content">
+          <div class="author">
+            <img
+              class="avatar border-white"
+              src="{{ myUser.photoURL }}"
+              onerror="this.src='assets/img/profile-placeholder.png';"
+              alt="..."
+            />
+            <div>
+              <h4 class="title">{{ myUser.displayName }}</h4>
+            </div>
+            <div>
+              <a
+                class="title"
+                href="https://www.{{ myUser.signInMethod }}/{{
+                  myUser.userName
+                }}"
+                target="_blank"
+                ><small>{{ myUser.userName }}</small></a
+              >
+            </div>
+          </div>
+          <p class="description text-center">{{ myUser.aboutMe }}</p>
+        </div>
+        <hr />
+        <!--
+          <div class="text-center">
+            <div class="row">
+              <div class="col-md-3 col-md-offset-1">
+                <h5>12<br /><small>Files</small></h5>
+              </div>
+              <div class="col-md-4">
+                <h5>2GB<br /><small>Used</small></h5>
+              </div>
+              <div class="col-md-3">
+                <h5>24,6$<br /><small>Spent</small></h5>
+              </div>
+            </div>
+          </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-7 col-md-offset-2">
+      <div class="card">
+        <div class="header"><h4 class="title">Details</h4></div>
+        <div class="content">
+          <form (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="companyInput">Company</label>
+                  <input
+                    id="companyInput"
+                    type="text"
+                    name="company"
+                    class="form-control border-input"
+                    placeholder="Company"
+                    [(ngModel)]="myUser.company"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="userNameInput">Username</label>
+                  <input
+                    id="userNameInput"
+                    type="text"
+                    name="userName"
+                    class="form-control border-input"
+                    placeholder="username"
+                    [(ngModel)]="myUser.userName"
+                  />
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label for="emailInput">Email address</label>
+                  <input
+                    id="emailInput"
+                    type="email"
+                    name="email"
+                    class="form-control border-input"
+                    placeholder="Email"
+                    [(ngModel)]="myUser.email"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="firstNameInput">First Name</label>
+                  <input
+                    id="firstNameInput"
+                    type="text"
+                    name="firstName"
+                    class="form-control border-input"
+                    placeholder="First Name"
+                    [(ngModel)]="myUser.firstName"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="lastNameInput">Last Name</label>
+                  <input
+                    id="lastNameInput"
+                    type="text"
+                    name="lastName"
+                    class="form-control border-input"
+                    placeholder="Last Name"
+                    [(ngModel)]="myUser.lastName"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="phoneNumberInput">Phone Number</label>
+                  <input
+                    id="phoneNumberInput"
+                    type="phone"
+                    name="phoneNumber"
+                    class="form-control border-input"
+                    placeholder="+XXXXXXX-XXXX"
+                    [(ngModel)]="myUser.phoneNumber"
+                    pattern="^[0-9 +]+$"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="addressInput">Address</label>
+                  <input
+                    id="addressInput"
+                    type="text"
+                    name="address"
+                    class="form-control border-input"
+                    placeholder="Home Address"
+                    [(ngModel)]="myUser.address"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label for="cityInput">City</label>
+                  <input
+                    id="cityInput"
+                    type="text"
+                    name="city"
+                    class="form-control border-input"
+                    placeholder="City"
+                    [(ngModel)]="myUser.city"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="countryInput">Country</label>
+                  <input
+                    id="countryInput"
+                    type="text"
+                    name="country"
+                    class="form-control border-input"
+                    placeholder="Country"
+                    [(ngModel)]="myUser.country"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="postalCodeInput">Postal Code</label>
+                  <input
+                    id="postalCodeInput"
+                    type="text"
+                    name="postalCode"
+                    class="form-control border-input"
+                    placeholder="XXX XXX"
+                    [(ngModel)]="myUser.postalCode"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="aboutMeInput">About Me</label>
+                  <textarea
+                    id="aboutMeInput"
+                    name="aboutMe"
+                    class="form-control border-input"
+                    placeholder="Tell others a little about yourself"
+                    [(ngModel)]="myUser.aboutMe"
+                    rows="5"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-info btn-fill btn-wd">
+                Update Profile
+              </button>
+            </div>
+            <div [hidden]="!showRecaptcha" id="'recaptcha-container'">
+              <br />
+              <re-captcha
+                site_key="6LeQFH4UAAAAAFkvmMjkqY_Y5EHs3pnmqr4epN_R"
+              ></re-captcha>
+              <br />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+  <div class="card">
+      <div class="header">
+          <h4 class="title">Team Members</h4>
+      </div>
+      <div class="content">
+          <ul class="list-unstyled team-members">
+                      <li>
+                          <div class="row">
+                              <div class="col-xs-3">
+                                  <div class="avatar">
+                                      <img src="assets/img/faces/face-0.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                  </div>
+                              </div>
+                              <div class="col-xs-6">
+                                  DJ Khaled
+                                  <br />
+                                  <span class="text-muted"><small>Offline</small></span>
+                              </div>
+
+                              <div class="col-xs-3 text-right">
+                                  <button class="btn btn-sm btn-success btn-icon"><i class="fa fa-envelope"></i></button>
+                              </div>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="row">
+                              <div class="col-xs-3">
+                                  <div class="avatar">
+                                      <img src="assets/img/faces/face-1.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                  </div>
+                              </div>
+                              <div class="col-xs-6">
+                                  Creative Tim
+                                  <br />
+                                  <span class="text-success"><small>Available</small></span>
+                              </div>
+
+                              <div class="col-xs-3 text-right">
+                                  <button class="btn btn-sm btn-success btn-icon"><i class="fa fa-envelope"></i></button>
+                              </div>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="row">
+                              <div class="col-xs-3">
+                                  <div class="avatar">
+                                      <img src="assets/img/faces/face-3.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                  </div>
+                              </div>
+                              <div class="col-xs-6">
+                                  Flume
+                                  <br />
+                                  <span class="text-danger"><small>Busy</small></span>
+                              </div>
+
+                              <div class="col-xs-3 text-right">
+                                  <button class="btn btn-sm btn-success btn-icon"><i class="fa fa-envelope"></i></button>
+                              </div>
+                          </div>
+                      </li>
+                  </ul>
+      </div>
+  </div>
+-->
